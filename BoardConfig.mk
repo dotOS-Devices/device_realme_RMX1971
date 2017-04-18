@@ -4,9 +4,6 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-# Inherit from the proprietary version
--include vendor/realme/RMX1971/BoardConfigVendor.mk
-
 BOARD_VENDOR := realme
 
 DEVICE_PATH := device/realme/RMX1971
@@ -189,3 +186,6 @@ WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 QC_WIFI_HIDL_FEATURE_DUAL_AP := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
+
+# Inherit from the proprietary version
+include vendor/realme/RMX1971/BoardConfigVendor.mk

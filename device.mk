@@ -19,9 +19,6 @@ $(call inherit-product, build/make/target/product/product_launched_with_p.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
-# Inherit vendor
-$(call inherit-product-if-exists, vendor/realme/RMX1971/RMX1971-vendor.mk)
-
 # AID/fs configs
 PRODUCT_PACKAGES += \
     fs_config_files
@@ -447,3 +444,6 @@ PRODUCT_BOOT_JARS += \
 # loggy
 PRODUCT_PACKAGES += \
     loggy.sh
+
+# Inherit vendor
+$(call inherit-product-if-exists, vendor/realme/RMX1971/RMX1971-vendor.mk)
