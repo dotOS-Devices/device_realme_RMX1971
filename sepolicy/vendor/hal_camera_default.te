@@ -11,3 +11,5 @@ get_prop(hal_camera_default, oppo_debug_prop)
 get_prop(hal_camera_default, radio_prop)
 
 r_dir_file(hal_camera_default, sysfs_net)
+
+get_prop(hal_camera_default, camera_ro_prop)
