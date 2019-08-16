@@ -289,6 +289,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     fstab.qcom \
     init.class_main.sh \
+    init.GalaxyParts.sh \
     init.oppo.fingerprints.sh \
     init.qcom.early_boot.sh \
     init.qcom.post_boot.sh \

@@ -96,6 +96,15 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PRODUCT_PROPERTIES += \
    persist.camera.HAL3.enabled=1
 
+# Dirac algo tsx 9/12
+persist.dirac.acs.controller=qem
+persist.dirac.acs.storeSettings=1
+persist.dirac.acs.ignore_error=1
+
+# Dirac headset effect
+ro.audio.soundfx.dirac=true
+persist.audio.dirac.speaker=true
+
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
     vendor.display.enable_default_color_mode=1 \

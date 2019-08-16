@@ -7,8 +7,13 @@ allow system_app vendor_default_prop:file { getattr open read };
 allow system_app vendor_default_prop:file {map};
 
 # GalaxyParts
-allow system_app proc_touchpanel:dir search;
-allow system_app proc_touchpanel:file rw_file_perms;
-allow system_app sysfs_oppo_display:dir search; 
-allow system_app sysfs_oppo_display:file { getattr open read write };
+allow system_app proc_touchpanel:file write;
+allow system_app vendor_default_prop:file { getattr open };
+allow system_app vendor_default_prop:file {map};
 
+# KCAL
+allow system_app kcal_dev:file rw_file_perms;
+allow system_app kcal_dev:dir search;
+
+# FPS Info
+allow system_app sysfs_fps:file rw_file_perms;

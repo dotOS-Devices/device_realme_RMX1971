@@ -24,11 +24,17 @@ import android.content.SharedPreferences;
 import android.provider.Settings;
 import android.text.TextUtils;
 import androidx.preference.PreferenceManager;
+import org.Galaxy.settings.device.ModeSwitch.GameModeSwitch;
+import org.Galaxy.settings.device.kcal.DisplayCalibration;
+import org.Galaxy.settings.device.DiracUtils;
 
 public class Startup extends BroadcastReceiver {
 
     private static final String TAG = "BootReceiver";
     private static final String ONE_TIME_TUNABLE_RESTORE = "hardware_tunable_restored";
+
+    private final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
+    private final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
 
     private void restore(String file, boolean enabled) {
         if (file == null) {
@@ -50,10 +56,23 @@ public class Startup extends BroadcastReceiver {
     public void onReceive(final Context context, final Intent bootintent) {
         boolean enabled = false;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        enabled = sharedPrefs.getBoolean(GalaxyParts.KEY_SRGB_SWITCH, false);
-        restore(SRGBModeSwitch.getFile(), enabled);
         enabled = sharedPrefs.getBoolean(GalaxyParts.KEY_GAME_SWITCH, false);
         restore(GameModeSwitch.getFile(), enabled);
+        org.Galaxy.settings.device.doze.Utils.checkDozeService(context);
+        context.startService(new Intent(context, DisplayCalibration.class));
+
+        int gain = Settings.Secure.getInt(context.getContentResolver(),
+                GalaxyParts.PREF_HEADPHONE_GAIN, 4);
+        FileUtils.setValue(HEADPHONE_GAIN_PATH, gain + " " + gain);
+        FileUtils.setValue(MICROPHONE_GAIN_PATH, Settings.Secure.getInt(context.getContentResolver(),
+                GalaxyParts.PREF_MICROPHONE_GAIN, 0));
+        FileUtils.setValue(GalaxyParts.EARPIECE_GAIN_PATH, Settings.Secure.getInt(context.getContentResolver(),
+                GalaxyParts.PREF_EARPIECE_GAIN, 0));
+        context.startService(new Intent(context, DiracService.class));
+
+        enabled = sharedPrefs.getBoolean (GalaxyParts.PREF_KEY_FPS_INFO, false);
+        if (enabled) {
+            context.startService(new Intent(context, FPSInfoService.class));
     }
 
     private boolean hasRestoredTunable(Context context) {

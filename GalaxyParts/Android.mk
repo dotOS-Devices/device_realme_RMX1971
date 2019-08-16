@@ -35,8 +35,7 @@ LOCAL_JAVA_LIBRARIES := \
     airbnb-lottie
 
 LOCAL_RESOURCE_DIR := \
-    $(LOCAL_PATH)/res \
-    $(TOP)/packages/resources/GalaxyParts/res
+    $(LOCAL_PATH)/res
 
 package_resource_overlays := $(strip \
     $(wildcard $(foreach dir, $(PRODUCT_PACKAGE_OVERLAYS), \

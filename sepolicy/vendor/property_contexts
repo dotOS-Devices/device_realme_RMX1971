@@ -50,3 +50,6 @@ persist.oppo.wlan.            u:object_r:oppo_wlan_prop:s0
 
 # Alarm
 ro.alarm_boot                   u:object_r:vendor_alarm_boot_prop:s0
+
+# Dirac
+persist.audio.dirac                             u:object_r:dirac_prop:s0

@@ -24,7 +24,7 @@ import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 import androidx.preference.PreferenceManager;
 
-import org.Galaxy.settings.device.GalaxyParts;
+import org.Galaxy.settings.device.ModeSwitch.GameModeSwitch;
 
 @TargetApi(24)
 public class GameModeTileService extends TileService {

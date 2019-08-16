@@ -43,22 +43,49 @@ import androidx.preference.PreferenceGroup;
 import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 
-import android.os.FileUtils;
+import org.Galaxy.settings.device.ModeSwitch.GameModeSwitch;
+import org.Galaxy.settings.device.doze.DozeSettingsActivity;
+import org.Galaxy.settings.device.kcal.DisplayCalibration;
+import org.Galaxy.settings.device.preferences.CustomSeekBarPreference;
+import org.Galaxy.settings.device.preferences.SecureSettingListPreference;
+import org.Galaxy.settings.device.preferences.SecureSettingSwitchPreference;
+
 
 public class GalaxyParts extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
 
     private static final String KEY_CATEGORY_GRAPHICS = "graphics";
-    public static final String KEY_SRGB_SWITCH = "srgb";
-    public static final String KEY_GAME_SWITCH = "game";
+    private static final String PREF_DOZE = "advanced_doze_settings";
+    private static final String PREF_SPECTRUM = "spectrum";
+    private static final String SPECTRUM_SYSTEM_PROPERTY = "persist.spectrum.profile";
+    private static final String PREF_ENABLE_DIRAC = "dirac_enabled";
+    private static final String PREF_HEADSET = "dirac_headset_pref";
+    private static final String PREF_PRESET = "dirac_preset_pref";
+    private static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
+    private static final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
 
+    public static final String KEY_GAME_SWITCH = "game";
     public static final String TP_LIMIT_ENABLE = "/proc/touchpanel/oppo_tp_limit_enable";
     public static final String TP_DIRECTION = "/proc/touchpanel/oppo_tp_direction";
+    public static final String PREF_EARPIECE_GAIN = "earpiece_gain";
+    public static final String EARPIECE_GAIN_PATH = "/sys/kernel/sound_control/earpiece_gain";
+    public static final String PREF_KEY_FPS_INFO = "fps_info";
 
     public static final String KEY_SETTINGS_PREFIX = "GalaxyParts";
 
-    private static TwoStatePreference mSRGBModeSwitch;
+    final static String PREF_MICROPHONE_GAIN = "microphone_gain";
+    final static String PREF_HEADPHONE_GAIN = "headphone_gain";
+
     private static TwoStatePreference mGameModeSwitch;
+    private Preference mDozeSettings;
+    private Preference mKcalPref;
+    private SecureSettingListPreference mSPECTRUM;
+    private SecureSettingSwitchPreference mEnableDirac;
+    private SecureSettingListPreference mHeadsetType;
+    private SecureSettingListPreference mPreset;
+    private CustomSeekBarPreference mHeadphoneGain;
+    private CustomSeekBarPreference mMicrophoneGain;
+    private CustomSeekBarPreference mEarpieceGain;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -66,35 +93,144 @@ public class GalaxyParts extends PreferenceFragment
         addPreferencesFromResource(R.xml.main);
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSRGBModeSwitch = (TwoStatePreference) findPreference(KEY_SRGB_SWITCH);
-        mSRGBModeSwitch.setEnabled(SRGBModeSwitch.isSupported());
-        mSRGBModeSwitch.setChecked(SRGBModeSwitch.isCurrentlyEnabled(this.getContext()));
-        mSRGBModeSwitch.setOnPreferenceChangeListener(new SRGBModeSwitch());
-
         mGameModeSwitch = (TwoStatePreference) findPreference(KEY_GAME_SWITCH);
         mGameModeSwitch.setEnabled(GameModeSwitch.isSupported());
         mGameModeSwitch.setChecked(GameModeSwitch.isCurrentlyEnabled(this.getContext()));
         mGameModeSwitch.setOnPreferenceChangeListener(new GameModeSwitch());        
+
+        mDozeSettings = (Preference)findPreference(PREF_DOZE);
+        mDozeSettings.setOnPreferenceClickListener(preference -> {
+            Intent intent = new Intent(getActivity().getApplicationContext(), DozeSettingsActivity.class);
+            startActivity(intent);
+            return true;
+        });
+
+        mSPECTRUM = (SecureSettingListPreference) findPreference(PREF_SPECTRUM);
+        mSPECTRUM.setValue(FileUtils.getStringProp(SPECTRUM_SYSTEM_PROPERTY, "0"));
+        mSPECTRUM.setSummary(mSPECTRUM.getEntry());
+        mSPECTRUM.setOnPreferenceChangeListener(this);
+
+        mKcalPref = findPreference("kcal");
+                mKcalPref.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                     @Override
+                     public boolean onPreferenceClick(Preference preference) {
+                         Intent intent = new Intent(getContext(), DisplayCalibration.class);
+                         startActivity(intent);
+                         return true;
+                     }
+                });
+
+        boolean enhancerEnabled;
+        try {
+            enhancerEnabled = DiracService.sDiracUtils.isDiracEnabled();
+        } catch (java.lang.NullPointerException e) {
+            getContext().startService(new Intent(getContext(), DiracService.class));
+            try {
+                enhancerEnabled = DiracService.sDiracUtils.isDiracEnabled();
+            } catch (NullPointerException ne) {
+                // Avoid crash
+                ne.printStackTrace();
+                enhancerEnabled = false;
+            }
+        }
+
+        mEnableDirac = (SecureSettingSwitchPreference) findPreference(PREF_ENABLE_DIRAC);
+        mEnableDirac.setOnPreferenceChangeListener(this);
+        mEnableDirac.setChecked(enhancerEnabled);
+
+        mHeadsetType = (SecureSettingListPreference) findPreference(PREF_HEADSET);
+        mHeadsetType.setOnPreferenceChangeListener(this);
+
+        mPreset = (SecureSettingListPreference) findPreference(PREF_PRESET);
+        mPreset.setOnPreferenceChangeListener(this);
+
+        mHeadphoneGain = (CustomSeekBarPreference) findPreference(PREF_HEADPHONE_GAIN);
+        mHeadphoneGain.setOnPreferenceChangeListener(this);
+
+        mMicrophoneGain = (CustomSeekBarPreference) findPreference(PREF_MICROPHONE_GAIN);
+        mMicrophoneGain.setOnPreferenceChangeListener(this);
+
+        mEarpieceGain = (CustomSeekBarPreference) findPreference(PREF_EARPIECE_GAIN);
+        mEarpieceGain.setOnPreferenceChangeListener(this);
+
+        SwitchPreference fpsInfo = (SwitchPreference) findPreference(PREF_KEY_FPS_INFO);
+        fpsInfo.setChecked(prefs.getBoolean(PREF_KEY_FPS_INFO, false));
+        fpsInfo.setOnPreferenceChangeListener(this);
+
     }
 
     @Override
-    public boolean onPreferenceTreeClick(Preference preference) {
-        return super.onPreferenceTreeClick(preference);
-    }
+    public boolean onPreferenceChange(Preference preference, Object value) {
+        final String key = preference.getKey();
+        switch (key) {
+            case PREF_SPECTRUM:
+                mSPECTRUM.setValue((String) value);
+                mSPECTRUM.setSummary(mSPECTRUM.getEntry());
+                FileUtils.setStringProp(SPECTRUM_SYSTEM_PROPERTY, (String) value);
+                break;
 
-    @Override
-    public boolean onPreferenceChange(Preference preference, Object newValue) {
+            case PREF_ENABLE_DIRAC:
+                try {
+                    DiracService.sDiracUtils.setEnabled((boolean) value);
+                } catch (java.lang.NullPointerException e) {
+                    getContext().startService(new Intent(getContext(), DiracService.class));
+                    DiracService.sDiracUtils.setEnabled((boolean) value);
+                }
+                break;
+
+            case PREF_HEADSET:
+                try {
+                    DiracService.sDiracUtils.setHeadsetType(Integer.parseInt(value.toString()));
+                } catch (java.lang.NullPointerException e) {
+                    getContext().startService(new Intent(getContext(), DiracService.class));
+                    DiracService.sDiracUtils.setHeadsetType(Integer.parseInt(value.toString()));
+                }
+                break;
+
+            case PREF_PRESET:
+                try {
+                    DiracService.sDiracUtils.setLevel(String.valueOf(value));
+                } catch (java.lang.NullPointerException e) {
+                    getContext().startService(new Intent(getContext(), DiracService.class));
+                    DiracService.sDiracUtils.setLevel(String.valueOf(value));
+                }
+                break;
+
+            case PREF_KEY_FPS_INFO:
+                boolean enabled = (Boolean) value;
+                Intent fpsinfo = new Intent(this.getContext(), FPSInfoService.class);
+                if (enabled) {
+                    this.getContext().startService(fpsinfo);
+                } else {
+                    this.getContext().stopService(fpsinfo);
+                }
+                break;
+
+            case PREF_HEADPHONE_GAIN:
+                FileUtils.setValue(HEADPHONE_GAIN_PATH, value + " " + value);
+                break;
+
+            case PREF_MICROPHONE_GAIN:
+                FileUtils.setValue(MICROPHONE_GAIN_PATH, (int) value);
+                break;
+
+            case PREF_EARPIECE_GAIN:
+                FileUtils.setValue(EARPIECE_GAIN_PATH, (int) value);
+                break;
+
+            default:
+                break;
+        }
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-        // Respond to the action bar's Up/Home button
-        case android.R.id.home:
-            getActivity().finish();
+    private boolean isAppNotInstalled(String uri) {
+        PackageManager packageManager = getContext().getPackageManager();
+        try {
+            packageManager.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            return false;
+        } catch (PackageManager.NameNotFoundException e) {
             return true;
         }
-        return super.onOptionsItemSelected(item);
     }
 }

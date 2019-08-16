@@ -21,8 +21,11 @@
     <uses-permission android:name="android.permission.INJECT_EVENTS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
 
     <protected-broadcast android:name="org.Galaxy.settings.device.UPDATE_SETTINGS" />
+    <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <uses-sdk
         android:minSdkVersion="30"
@@ -52,17 +55,36 @@
 
         <activity android:name=".GalaxyParts" />
 
-        <receiver android:name="org.Galaxy.Device.Startup" >
+        <receiver android:name="org.Galaxy.settings.device.Startup" >
             <intent-filter android:priority="100" >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
+        <activity
+            android:name="org.Galaxy.settings.device.doze.DozeSettingsActivity"
+            android:exported="true"
+            android:label="@string/ambient_display_title"
+            android:launchMode="singleTask" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <activity
+            android:name="org.Galaxy.settings.device.kcal.DisplayCalibration"
+            android:label="@string/kcal_title">
+          <intent-filter>
+                <action android:name="com.android.settings.action.IA_SETTINGS" />
+          </intent-filter>
+        </activity>
+
         <!-- Quick Settings Tiles -->
         <service
-            android:name="org.Galaxy.settings.device.SRGBModeTileService"
-            android:icon="@drawable/ic_srgb_tile"
-            android:label="@string/tile_srgb_mode"
+            android:name="org.Galaxy.settings.device.doze.DozeTileService"
+            android:icon="@drawable/ic_eye"
+            android:label="@string/ambient_display_gestures_title"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action
@@ -70,9 +92,32 @@
             </intent-filter>
         </service>
         <service
-            android:name="org.Galaxy.settings.device.Device.GameModeTileService"
+            android:name="org.Galaxy.settings.device.GameModeTileService"
             android:icon="@drawable/ic_game_tile"
             android:label="@string/tile_game_mode"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action
+                    android:name="android.service.quicksettings.action.QS_TILE"/>
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".DiracService"
+            android:enabled="true"
+            android:stopWithTask="false" />
+
+        <service android:name="org.Galaxy.settings.device.doze.DozeService"
+                 android:permission="RealmeDozeService">
+        </service>
+        <service
+            android:name=".FPSInfoService"
+            android:exported="false">
+        </service>
+        <service
+            android:name=".FPSTileService"
+            android:icon="@drawable/ic_fps_info"
+            android:label="@string/fps_info_title"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action

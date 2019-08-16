@@ -15,7 +15,7 @@
 * along with this program. If not, see <http://www.gnu.org/licenses/>.
 *
 */
-package org.Galaxy.settings.device;
+package org.Galaxy.settings.device.ModeSwitch;
 
 import android.util.Log;
 import android.content.Context;
@@ -25,6 +25,7 @@ import androidx.preference.Preference.OnPreferenceChangeListener;
 import androidx.preference.PreferenceManager;
 
 import org.Galaxy.settings.device.GalaxyParts;
+import org.Galaxy.settings.device.Utils;
 
 public class GameModeSwitch implements OnPreferenceChangeListener {
 
