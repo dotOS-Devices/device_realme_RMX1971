@@ -131,9 +131,13 @@ PRODUCT_PACKAGES += \
     android.hardware.drm@1.0-service \
     android.hardware.drm@1.2-service.clearkey
 
-
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
+
+# Fingerprint
+PRODUCT_PACKAGES += \
+    android.hardware.biometrics.fingerprint@2.1-service.RMX1971 \
+    vendor.oppo.hardware.biometrics.fingerprint@2.1
 
 # Gps
 PRODUCT_COPY_FILES += \
