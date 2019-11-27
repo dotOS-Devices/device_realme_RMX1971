@@ -313,6 +313,12 @@ PRODUCT_PACKAGES += \
     libjson \
     librmnetctl
 
+# Sensors
+PRODUCT_PACKAGES += \
+    android.hardware.sensors@1.0-impl.RMX1971 \
+    android.hardware.sensors@1.0-service \
+    libsensorndkbridge
+
 # Screen density
 PRODUCT_AAPT_CONFIG := normal
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
