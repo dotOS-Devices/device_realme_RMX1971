@@ -167,3 +167,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Perf
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.vendor.extension_library=libqti-perfd-client.so
+
+# USB
+PRODUCT_PROPERTY_OVERRIDES += \
+    vendor.usb.diag.func.name=diag
