@@ -4,3 +4,7 @@ allow hal_sensors_default sensors_prop:file { read open getattr };
 get_prop(hal_sensors_default, oppo_debug_prop);
 
 r_dir_file(hal_sensors_default, proc_touchpanel);
+
+userdebug_or_eng(`
+  get_prop(hal_sensors_default, sensors_dbg_prop)
+')
