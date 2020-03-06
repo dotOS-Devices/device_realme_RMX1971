@@ -317,6 +317,7 @@ PRODUCT_PACKAGES += \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.usb.sh \
+    init.recovery.qcom.sh \
     init.oppo.reserve.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
