@@ -328,7 +328,6 @@ PRODUCT_PACKAGES += \
     init.qcom.sensors.sh \
     init.qcom.sh \
     init.qcom.usb.sh \
-    init.msm.usb.configfs.rc \
     init.oppo.reserve.rc \
     init.qcom.rc \
     init.qcom.usb.rc \
