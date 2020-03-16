@@ -170,4 +170,5 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # USB
 PRODUCT_PROPERTY_OVERRIDES += \
-    vendor.usb.diag.func.name=diag
+    vendor.usb.diag.func.name=diag \
+    vendor.usb.use_ffs_mtp=0
