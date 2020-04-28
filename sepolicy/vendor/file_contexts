@@ -43,6 +43,9 @@
 # Sensor
 /(vendor|system/vendor)/bin/hw/android\.hardware\.sensors@1\.0-service\.RMX1971                     u:object_r:hal_sensors_default_exec:s0
 
+# Radio
+/system/etc/ril/qcril.db                              u:object_r:radio_data_file:s0
+
 # KCAL
 /sys/devices/platform/kcal_ctrl.0(/.*)?                      u:object_r:kcal_dev:s0
 /sys/bus/platform/drivers/kcal_ctrl(/.*)?                    u:object_r:kcal_dev:s0
