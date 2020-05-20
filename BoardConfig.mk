@@ -157,7 +157,7 @@ VENDOR_SECURITY_PATCH := 2021-01-05
 
 # Sepolicy
 SELINUX_IGNORE_NEVERALLOWS := true
-include device/qcom/sepolicy/sepolicy.mk
+include device/qcom/sepolicy_vndr/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
 
 # Verified Boot
