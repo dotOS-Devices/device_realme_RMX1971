@@ -23,6 +23,7 @@ allow init self:netlink_route_socket read;
 allow init self:rawip_socket { create getopt setopt };
 allow init vendor_file:file execute;
 allow init vendor_file:file execute_no_trans;
+allow init su:process { noatsecure  rlimitinh  siginh  transition };
 
 # Allow init to write to sysfs_battery_supply
 allow init sysfs_battery_supply:file { setattr };

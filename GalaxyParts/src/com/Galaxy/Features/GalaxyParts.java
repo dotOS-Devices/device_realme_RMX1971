@@ -23,9 +23,9 @@ import android.content.ComponentName;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.content.Intent;
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SELinux;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.MenuItem;
@@ -34,6 +34,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.util.Log;
+import android.content.Context;
 import androidx.preference.PreferenceFragment;
 import androidx.preference.PreferenceManager;
 import androidx.preference.SwitchPreference;
@@ -53,9 +54,13 @@ import com.Galaxy.Features.preferences.CustomSeekBarPreference;
 import com.Galaxy.Features.preferences.SecureSettingListPreference;
 import com.Galaxy.Features.preferences.SecureSettingSwitchPreference;
 import com.Galaxy.Features.preferences.SeekBarPreference;
+import com.Galaxy.Features.SuShell;
+import com.Galaxy.Features.SuTask;
 
 public class GalaxyParts extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
+
+    private static final String TAG = "GalaxyParts";
 
     private static final String KEY_CATEGORY_GRAPHICS = "graphics";
     private static final String PREF_DOZE = "advanced_doze_settings";
@@ -64,6 +69,9 @@ public class GalaxyParts extends PreferenceFragment
     private static final String PREF_ENABLE_DIRAC = "dirac_enabled";
     private static final String PREF_HEADSET = "dirac_headset_pref";
     private static final String PREF_PRESET = "dirac_preset_pref";
+    private static final String SELINUX_CATEGORY = "selinux";
+    private static final String PREF_SELINUX_MODE = "selinux_mode";
+    private static final String PREF_SELINUX_PERSISTENCE = "selinux_persistence";
     private static final String HEADPHONE_GAIN_PATH = "/sys/kernel/sound_control/headphone_gain";
     private static final String MICROPHONE_GAIN_PATH = "/sys/kernel/sound_control/mic_gain";
 
@@ -84,7 +92,6 @@ public class GalaxyParts extends PreferenceFragment
 
     private static TwoStatePreference mGameModeSwitch;
     private static TwoStatePreference mSmartChargingSwitch;
-    private static Context mContext;
     public static SeekBarPreference mSeekBarPreference;
 
     private Preference mGesturesPref;
@@ -97,12 +104,13 @@ public class GalaxyParts extends PreferenceFragment
     private CustomSeekBarPreference mHeadphoneGain;
     private CustomSeekBarPreference mMicrophoneGain;
     private CustomSeekBarPreference mEarpieceGain;
+    private SwitchPreference mSelinuxMode;
+    private SwitchPreference mSelinuxPersistence;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getContext());
         addPreferencesFromResource(R.xml.Galaxy_preferences);
-        mContext = this.getContext();
         getActivity().getActionBar().setDisplayHomeAsUpEnabled(true);
 
         mGameModeSwitch = (TwoStatePreference) findPreference(KEY_GAME_SWITCH);
@@ -167,6 +175,19 @@ public class GalaxyParts extends PreferenceFragment
                 enhancerEnabled = false;
             }
         }
+
+        // SELinux
+        Preference selinuxCategory = findPreference(SELINUX_CATEGORY);
+        mSelinuxMode = (SwitchPreference) findPreference(PREF_SELINUX_MODE);
+        mSelinuxMode.setChecked(SELinux.isSELinuxEnforced());
+        mSelinuxMode.setOnPreferenceChangeListener(this);
+
+        mSelinuxPersistence =
+        (SwitchPreference) findPreference(PREF_SELINUX_PERSISTENCE);
+        mSelinuxPersistence.setOnPreferenceChangeListener(this);
+        mSelinuxPersistence.setChecked(getContext()
+        .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE)
+        .contains(PREF_SELINUX_MODE));
 
         mEnableDirac = (SecureSettingSwitchPreference) findPreference(PREF_ENABLE_DIRAC);
         mEnableDirac.setOnPreferenceChangeListener(this);
@@ -252,11 +273,64 @@ public class GalaxyParts extends PreferenceFragment
                 FileUtils.setValue(EARPIECE_GAIN_PATH, (int) value);
                 break;
 
+            case PREF_SELINUX_MODE:
+                  if (preference == mSelinuxMode) {
+                  boolean enable = (Boolean) value;
+                  new SwitchSelinuxTask(getActivity()).execute(enable);
+                  setSelinuxEnabled(enable, mSelinuxPersistence.isChecked());
+                  return true;
+                } else if (preference == mSelinuxPersistence) {
+                  setSelinuxEnabled(mSelinuxMode.isChecked(), (Boolean) value);
+                  return true;
+                }
+
+                break;
+
             default:
                 break;
         }
         return true;
     }
+
+        private void setSelinuxEnabled(boolean status, boolean persistent) {
+          SharedPreferences.Editor editor = getContext()
+              .getSharedPreferences("selinux_pref", Context.MODE_PRIVATE).edit();
+          if (persistent) {
+            editor.putBoolean(PREF_SELINUX_MODE, status);
+          } else {
+            editor.remove(PREF_SELINUX_MODE);
+          }
+          editor.apply();
+          mSelinuxMode.setChecked(status);
+        }
+
+        private class SwitchSelinuxTask extends SuTask<Boolean> {
+          public SwitchSelinuxTask(Context context) {
+            super(context);
+          }
+          @Override
+          protected void sudoInBackground(Boolean... params) throws SuShell.SuDeniedException {
+            if (params.length != 1) {
+              Log.e(TAG, "SwitchSelinuxTask: invalid params count");
+              return;
+            }
+            if (params[0]) {
+              SuShell.runWithSuCheck("setenforce 1");
+            } else {
+              SuShell.runWithSuCheck("setenforce 0");
+            }
+          }
+
+          @Override
+          protected void onPostExecute(Boolean result) {
+
+            super.onPostExecute(result);
+            if (!result) {
+              // Did not work, so restore actual value
+              setSelinuxEnabled(SELinux.isSELinuxEnforced(), mSelinuxPersistence.isChecked());
+            }
+          }
+        }
 
     private boolean isAppNotInstalled(String uri) {
         PackageManager packageManager = getContext().getPackageManager();
