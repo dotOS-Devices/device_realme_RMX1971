@@ -64,7 +64,7 @@ on fs
     #Xuefeng.Peng@PSW.AD.Storage.ReservePartition.1207580, 2018/11/19, Add for change opporeserve mount point for google GSI test
     mkdir /mnt/vendor/opporeserve 0771 system system
     #endif /*VENDOR_EDIT*/
-    mount_all /vendor/etc/fstab.qcom --early
+    mount_all --early
     swapon_all /vendor/etc/fstab.qcom
     chown root system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
@@ -88,7 +88,7 @@ service sec_nvm /vendor/bin/sec_nvm
     group system
 
 on late-fs
-    mount_all /vendor/etc/fstab.qcom --late
+    mount_all --late
 
 on post-fs-data
     mkdir /data/tombstones 0771 system system
