@@ -7,6 +7,8 @@ allow system_app vendor_default_prop:file { getattr open read };
 allow system_app vendor_default_prop:file {map};
 allow system_app proc_vmallocinfo:file read;
 allow system_app sysfs_zram:file read;
+allow system_app sysfs_battery_supply:dir search;
+allow system_app sysfs_battery_supply:file { getattr open read };
 
 # GalaxyParts
 allow system_app proc_touchpanel:file write;
@@ -19,3 +21,4 @@ allow system_app kcal_dev:dir search;
 
 # FPS Info
 allow system_app sysfs_fps:file rw_file_perms;
+
