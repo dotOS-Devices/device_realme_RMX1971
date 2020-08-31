@@ -36,6 +36,7 @@ import /vendor/etc/init/hw/init.target.rc
 import /vendor/etc/init/hw/init.qcom.factory.rc
 import /vendor/etc/init/hw/init.GalaxyParts.rc
 import /vendor/etc/init/hw/logcat.rc
+import /etc/init.spectrum.rc
 
 #ifdef VENDOR_EDIT
 #Fei.Mo@BSP.senosor 2018/10/30 add for init.oppo.vendor.motor.rc

@@ -382,6 +382,11 @@ PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
     hardware/qcom-caf/sdm845
 
+# Spectrum Manager
+PRODUCT_PACKAGES += \
+    init.spectrum.rc \
+    init.spectrum.sh
+
 # Telephony
 PRODUCT_PACKAGES += \
     ims-ext-common \
