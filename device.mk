@@ -160,7 +160,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
 
 # Fingerprint
 PRODUCT_PACKAGES += \
-    android.hardware.biometrics.fingerprint@2.1-service.RMX1971 \
+    android.hardware.biometrics.fingerprint@2.2-service.RMX1971 \
     vendor.oppo.hardware.biometrics.fingerprint@2.1
 
 # Gps
