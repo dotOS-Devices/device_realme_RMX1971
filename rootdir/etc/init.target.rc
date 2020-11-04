@@ -65,6 +65,7 @@ on fs
     mkdir /mnt/vendor/opporeserve 0771 system system
     #endif /*VENDOR_EDIT*/
     mount_all /vendor/etc/fstab.qcom --early
+    swapon_all /fstab.qcom
     chown root system /mnt/vendor/persist
     chmod 0771 /mnt/vendor/persist
     restorecon_recursive /mnt/vendor/persist
