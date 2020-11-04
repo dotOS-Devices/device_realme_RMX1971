@@ -297,6 +297,8 @@ on boot
     # OTG
     write /sys/class/power_supply/usb/otg_switch 1
 
+    setprop init.svc.console stopped
+
 # msm specific files that need to be created on /data
 on post-fs-data
     mkdir /data/vendor/misc 01771 system system
