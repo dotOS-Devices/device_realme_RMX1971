@@ -15,3 +15,6 @@ type dirac_prop, property_type;
 
 # Spectrum
 type spectrum_prop, property_type;
+
+# Thermal
+type vendor_thermal_prop, property_type;
