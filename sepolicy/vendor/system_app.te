@@ -12,6 +12,7 @@ allow system_app sysfs_battery_supply:file { getattr open read };
 allow system_app proc_vmallocinfo:file open;
 allow system_app sysfs_zram:file open;
 allow system_app sysfs:file { getattr open read };
+allow system_app sysfs_device_info:file r_file_perms;
 
 # GalaxyParts
 allow system_app proc_touchpanel:file write;
