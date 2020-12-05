@@ -75,6 +75,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
     vendor.audio.volume.headset.gain.depcal=true \
     vendor.audio_hal.period_size=192
 
+# Additional props
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.qti.cgroup_follow.enable=true
+    persist.vendor.qti.inputopts.enable=true
+    persist.vendor.qti.inputopts.movetouchslop=0.6
+    ro.qcom.adreno.qgl.ShaderStorageImageExtendedFormats=0
+
 # Bluetooth
 PRODUCT_PROPERTY_OVERRIDES += \
     persist.bluetooth.a2dp_offload.disabled=true \
