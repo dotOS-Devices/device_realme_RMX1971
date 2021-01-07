@@ -55,26 +55,31 @@ public class Startup extends BroadcastReceiver {
     @Override
     public void onReceive(final Context context, final Intent bootintent) {
         boolean enabled = false;
-        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
-        enabled = sharedPrefs.getBoolean(GalaxyParts.KEY_GAME_SWITCH, false);
-        restore(GameModeSwitch.getFile(), enabled);
-        org.Galaxy.settings.device.doze.Utils.checkDozeService(context);
-        context.startService(new Intent(context, DisplayCalibration.class));
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences (context);
+        enabled = sharedPrefs.getBoolean (GalaxyParts.KEY_GAME_SWITCH, false);
+        restore (GameModeSwitch.getFile ( ), enabled);
+        org.Galaxy.settings.device.doze.Utils.checkDozeService (context);
+        context.startService (new Intent (context, DisplayCalibration.class));
 
-        int gain = Settings.Secure.getInt(context.getContentResolver(),
+        int gain = Settings.Secure.getInt (context.getContentResolver ( ),
                 GalaxyParts.PREF_HEADPHONE_GAIN, 4);
-        FileUtils.setValue(HEADPHONE_GAIN_PATH, gain + " " + gain);
-        FileUtils.setValue(MICROPHONE_GAIN_PATH, Settings.Secure.getInt(context.getContentResolver(),
+        FileUtils.setValue (HEADPHONE_GAIN_PATH, gain + " " + gain);
+        FileUtils.setValue (MICROPHONE_GAIN_PATH, Settings.Secure.getInt (context.getContentResolver ( ),
                 GalaxyParts.PREF_MICROPHONE_GAIN, 0));
-        FileUtils.setValue(GalaxyParts.EARPIECE_GAIN_PATH, Settings.Secure.getInt(context.getContentResolver(),
+        FileUtils.setValue (GalaxyParts.EARPIECE_GAIN_PATH, Settings.Secure.getInt (context.getContentResolver ( ),
                 GalaxyParts.PREF_EARPIECE_GAIN, 0));
-        context.startService(new Intent(context, DiracService.class));
+        context.startService (new Intent (context, DiracService.class));
 
         enabled = sharedPrefs.getBoolean (GalaxyParts.PREF_KEY_FPS_INFO, false);
         if (enabled) {
-            context.startService(new Intent(context, FPSInfoService.class));
-    }
+            context.startService (new Intent (context, FPSInfoService.class));
+            enabled = sharedPrefs.getBoolean (GalaxyParts.KEY_CHARGING_SWITCH, false);
+            if (enabled) {
+                context.startService (new Intent (context, SmartChargingService.class));
+            }
+        }
 
+    }    
     private boolean hasRestoredTunable(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         return preferences.getBoolean(ONE_TIME_TUNABLE_RESTORE, false);

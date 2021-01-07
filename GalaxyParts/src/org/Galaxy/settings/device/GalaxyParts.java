@@ -44,12 +44,13 @@ import androidx.preference.PreferenceScreen;
 import androidx.preference.TwoStatePreference;
 
 import org.Galaxy.settings.device.ModeSwitch.GameModeSwitch;
+import org.Galaxy.settings.device.ModeSwitch.SmartChargingSwitch;
 import org.Galaxy.settings.device.doze.DozeSettingsActivity;
 import org.Galaxy.settings.device.kcal.DisplayCalibration;
 import org.Galaxy.settings.device.preferences.CustomSeekBarPreference;
 import org.Galaxy.settings.device.preferences.SecureSettingListPreference;
 import org.Galaxy.settings.device.preferences.SecureSettingSwitchPreference;
-
+import org.Galaxy.settings.device.preferences.SeekBarPreference;
 
 public class GalaxyParts extends PreferenceFragment
         implements Preference.OnPreferenceChangeListener {
@@ -70,13 +71,18 @@ public class GalaxyParts extends PreferenceFragment
     public static final String PREF_EARPIECE_GAIN = "earpiece_gain";
     public static final String EARPIECE_GAIN_PATH = "/sys/kernel/sound_control/earpiece_gain";
     public static final String PREF_KEY_FPS_INFO = "fps_info";
+    public static final String KEY_CHARGING_SWITCH = "smart_charging";
+    public static final String KEY_RESET_STATS = "reset_stats";
 
     public static final String KEY_SETTINGS_PREFIX = "GalaxyParts";
 
     final static String PREF_MICROPHONE_GAIN = "microphone_gain";
     final static String PREF_HEADPHONE_GAIN = "headphone_gain";
+    public static TwoStatePreference mResetStats;
 
     private static TwoStatePreference mGameModeSwitch;
+    private static TwoStatePreference mSmartChargingSwitch;
+    public static SeekBarPreference mSeekBarPreference;
     private Preference mDozeSettings;
     private Preference mKcalPref;
     private SecureSettingListPreference mSPECTRUM;
@@ -97,6 +103,18 @@ public class GalaxyParts extends PreferenceFragment
         mGameModeSwitch.setEnabled(GameModeSwitch.isSupported());
         mGameModeSwitch.setChecked(GameModeSwitch.isCurrentlyEnabled(this.getContext()));
         mGameModeSwitch.setOnPreferenceChangeListener(new GameModeSwitch());        
+
+        mSmartChargingSwitch = (TwoStatePreference) findPreference(KEY_CHARGING_SWITCH);
+        mSmartChargingSwitch.setChecked(prefs.getBoolean(KEY_CHARGING_SWITCH, false));
+        mSmartChargingSwitch.setOnPreferenceChangeListener(new SmartChargingSwitch(getContext()));
+
+        mResetStats = (TwoStatePreference) findPreference(KEY_RESET_STATS);
+        mResetStats.setChecked(prefs.getBoolean(KEY_RESET_STATS, false));
+        mResetStats.setEnabled(mSmartChargingSwitch.isChecked());
+        mResetStats.setOnPreferenceChangeListener(this);
+
+        mSeekBarPreference = (SeekBarPreference) findPreference("seek_bar");
+        mSeekBarPreference.setEnabled(mSmartChargingSwitch.isChecked());
 
         mDozeSettings = (Preference)findPreference(PREF_DOZE);
         mDozeSettings.setOnPreferenceClickListener(preference -> {

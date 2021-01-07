@@ -21,3 +21,6 @@ type kcal_dev, sysfs_type, fs_type;
 
 # FPS Info
 type sysfs_fps, sysfs_type, fs_type;
+
+# Smart charging
+type sysfs_smart_charging, fs_type, sysfs_type;
