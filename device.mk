@@ -154,6 +154,10 @@ PRODUCT_PACKAGES += \
 # Enable updating of APEXes
 $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 
+# Enable iorapd perfetto tracing for app starts
+PRODUCT_PROPERTY_OVERRIDES += \
+    iorapd.perfetto.enable=true
+
 # Fingerprint
 PRODUCT_PACKAGES += \
     android.hardware.biometrics.fingerprint@2.1-service.RMX1971 \
