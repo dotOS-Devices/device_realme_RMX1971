@@ -1,0 +1,14 @@
+typeattribute vendor_init data_between_core_and_vendor_violators;
+
+allow vendor_init {
+  system_data_file
+  tombstone_data_file
+  nfc_data_file
+}:dir { create_dir_perms relabelfrom };
+
+allow vendor_init persist_file:lnk_file { setattr read };
+allow vendor_init proc_touchpanel:file { write };
+allow vendor_init block_device:lnk_file { setattr };
+# Allow vendor_init to set persist_camera_prop
+set_prop(vendor_init, vendor_camera_prop)
+set_prop(vendor_init, persist_camera_prop)
