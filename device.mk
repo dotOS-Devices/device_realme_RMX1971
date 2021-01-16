@@ -331,7 +331,8 @@ PRODUCT_PACKAGES += \
     init.recovery.qcom.rc \
     init.target.rc \
     init.GalaxyParts.rc \
-    ueventd.qcom.rc
+    ueventd.qcom.rc \
+    logcat.rc
 
 # RCS
 PRODUCT_PACKAGES += \
