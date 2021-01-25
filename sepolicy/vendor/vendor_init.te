@@ -22,3 +22,5 @@ set_prop(vendor_init, vendor_persist_camera_prop)
 
 # Dirac
 allow vendor_init dirac_prop:property_service set;
+
+allow vendor_init apex_metadata_file:dir create_dir_perms;
