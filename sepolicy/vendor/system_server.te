@@ -3,7 +3,7 @@ allow system_server vendor_default_prop:file { read open getattr };
 
 # Allow system_server to set persist_camera_prop
 get_prop(system_server, vendor_camera_prop)
-get_prop(system_server, persist_camera_prop)
+get_prop(system_server, vendor_persist_camera_prop)
 
 # R
 allow system_server exported_camera_prop:file { read };

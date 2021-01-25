@@ -11,7 +11,7 @@ allow vendor_init proc_touchpanel:file { write };
 allow vendor_init block_device:lnk_file { setattr };
 # Allow vendor_init to set persist_camera_prop
 set_prop(vendor_init, vendor_camera_prop)
-set_prop(vendor_init, persist_camera_prop)
+set_prop(vendor_init, vendor_persist_camera_prop)
 
 # Dirac
 allow vendor_init dirac_prop:property_service set;
