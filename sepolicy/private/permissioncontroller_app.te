@@ -1,0 +1,2 @@
+#============= permissioncontroller_app ==============
+allow permissioncontroller_app theme_prop:file read;

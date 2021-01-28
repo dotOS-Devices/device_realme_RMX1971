@@ -32,3 +32,4 @@ allow hal_fingerprint_default mnt_user_file:dir { search };
 allow hal_fingerprint_default default_prop:file { getattr open read };
 allow hal_fingerprint_default default_prop:property_service set;
 allow hal_fingerprint_default default_android_hwservice:hwservice_manager find;
+allow hal_fingerprint_default init:binder call;

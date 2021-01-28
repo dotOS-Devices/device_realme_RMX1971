@@ -1,1 +1,2 @@
 allow untrusted_app sysfs_kgsl:dir search;
+allow untrusted_app theme_prop:file read;

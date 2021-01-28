@@ -5,6 +5,8 @@ allow system_app proc_touchpanel:file { write getattr open read };
 allow system_app apk_data_file:dir { write };
 allow system_app vendor_default_prop:file { getattr open read };
 allow system_app vendor_default_prop:file {map};
+allow system_app proc_vmallocinfo:file read;
+allow system_app sysfs_zram:file read;
 
 # GalaxyParts
 allow system_app proc_touchpanel:file write;
