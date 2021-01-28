@@ -1,0 +1,2 @@
+#============= init ==============
+allow init bpfloader:bpf prog_run;

@@ -1,0 +1,2 @@
+#============= hwservicemanager ==============
+allow hwservicemanager init:binder { call transfer };

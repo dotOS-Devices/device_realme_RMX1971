@@ -1,0 +1,2 @@
+#============= updater_app ==============
+allow updater_app system_data_file:dir { open read };

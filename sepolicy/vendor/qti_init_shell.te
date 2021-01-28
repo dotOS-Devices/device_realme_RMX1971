@@ -10,3 +10,8 @@ allow qti_init_shell configfs:lnk_file { create };
 allow qti_init_shell vfat:dir { search };
 allow qti_init_shell system_data_file:dir { write };
 allow qti_init_shell system_data_file:dir { getattr };
+allow qti_init_shell proc_devinfo:file { getattr open read };
+allow qti_init_shell self:capability dac_override;
+allow qti_init_shell sysfs:file setattr;
+allow qti_init_shell sysfs_leds:file setattr;
+allow qti_init_shell default_prop:file { getattr open read };

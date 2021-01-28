@@ -1,5 +1,7 @@
 allow platform_app vendor_default_prop:file { read open getattr };
 allow platform_app sysfs_kgsl:dir { search };
+allow platform_app default_android_hwservice:hwservice_manager find;
+allow platform_app default_android_service:service_manager find;
 
 # FPS Info
 allow platform_app sysfs_fps:file { getattr open read };

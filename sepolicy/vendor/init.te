@@ -1,8 +1,28 @@
 allow init socket_device:sock_file { create setattr unlink };
 allow init hal_display_postproc_hwservice:hwservice_manager { find };
 allow init hwservicemanager:binder { transfer };
-allow init proc_oppoversion:file { read };
-allow init vendor_file:file { execute };
+allow init bt_firmware_file:filesystem getattr;
+allow init diag_device:chr_file { ioctl open read write };
+allow init firmware_file:filesystem getattr;
+allow init hal_dpmQmiMgr:binder { call transfer };
+allow init hal_fingerprint_default:binder { call transfer };
+allow init hwservicemanager:binder call;
+allow init netutils_wrapper_exec:file { execute execute_no_trans getattr open read };
+allow init proc_touchpanel:file setattr;
+allow init same_process_hal_file:file execute;
+allow init self:netlink_route_socket { bind create nlmsg_read write };
+allow init sysfs:file { open read setattr };
+allow init system_file:file execute_no_trans;
+allow init hal_dpmqmi_hwservice:hwservice_manager find;
+allow init hal_fingerprint_hwservice:hwservice_manager { add find };
+allow init hal_neuralnetworks_hwservice:hwservice_manager { add find };
+allow init hal_power_stats_hwservice:hwservice_manager { add find };
+allow init hidl_base_hwservice:hwservice_manager add;
+allow init self:capability2 wake_alarm;
+allow init self:netlink_route_socket read;
+allow init self:rawip_socket { create getopt setopt };
+allow init vendor_file:file execute;
+allow init vendor_file:file execute_no_trans;
 
 # Allow init to write to sysfs_battery_supply
 allow init sysfs_battery_supply:file { setattr };
