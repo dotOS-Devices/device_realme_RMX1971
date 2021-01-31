@@ -1,0 +1,2 @@
+#============= gmscore_app ==============
+allow gmscore_app camera_ro_prop:file read;
