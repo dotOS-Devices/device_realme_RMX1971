@@ -22,11 +22,4 @@
          3 = right side
     -->
     <integer name="config_fingerprintSensorLocation">0</integer>
-
-    <!--  About Phone  -->
-    <string name="legion_device_name_summary">Realme 5 Pro</string>
-    <string name="legion_chipset_type_summary">SDM712</string>
-    <string name="legion_gpu_summary">Adreno616</string>
-    <string name="legion_camera_mp_summary">48/16</string>
-    <string name="legion_screen_type_summary">IPS 6.3</string>
 </resources>
