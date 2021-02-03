@@ -638,12 +638,6 @@ vendor/lib64/libsdm-disp-vndapis.so|44665c56bb9e89cc55b641e00fced92ddfc96712
 vendor/lib64/libsdmextension.so|7abb1f8fecda1f59fa4fcbb0b11ea2391816c246
 vendor/lib64/libtinyxml2_1.so|d87dfed7c044e24c90fe4ae9fcd9b3812f432ff4
 
-# Display Hardware
-vendor/lib/libsdmcore.so
-vendor/lib64/libsdmcore.so
-vendor/lib/hw/hwcomposer.sdm710.so
-vendor/lib64/hw/hwcomposer.sdm710.so
-
 # Display postprocessing - from LA.UM.9.8.r1-02700-SDM710.0
 vendor/bin/hw/vendor.display.color@1.0-service|a9d360976833d863f74df381298de696daea8acb
 vendor/bin/mm-pp-dpps|e825298dc12603df29c35aa6ad86fd0d0a7646a2

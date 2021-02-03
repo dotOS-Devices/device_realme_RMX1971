@@ -122,6 +122,7 @@ PRODUCT_PACKAGES += \
     android.hardware.graphics.allocator@3.0-impl \
     android.hardware.graphics.allocator@4.0-impl \
     gralloc.sdm710 \
+    hwcomposer.sdm710 \
     memtrack.sdm710 \
     libtinyxml \
     libvulkan \
