@@ -5,4 +5,4 @@
 #
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/cherish_RMX1971.mk
+    $(LOCAL_DIR)/dot_RMX1971.mk
