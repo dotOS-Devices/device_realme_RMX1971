@@ -19,7 +19,6 @@
 
     <SwitchPreference
         android:key="always_on_display"
-        android:icon="@drawable/ic_eye"
         android:disableDependentsState="true"
         android:title="@string/ambient_display_always_on_title"
         android:summary="@string/ambient_display_always_on_summary"
@@ -39,7 +38,7 @@
         <SwitchPreference
             android:defaultValue="false"
             android:disableDependentsState="true"
-            android:icon="@drawable/ic_raise"
+            android:icon="@drawable/ic_pickup"
             android:key="gesture_raise_to_wake"
             android:summary="@string/raise_to_wake_gesture_summary"
             android:title="@string/raise_to_wake_gesture_title" />
@@ -49,6 +48,13 @@
     <PreferenceCategory
         android:key="proximity_sensor"
         android:title="@string/proximity_sensor_title">
+
+        <SwitchPreference
+            android:key="gesture_hand_wave"
+            android:icon="@drawable/ic_hand"
+            android:defaultValue="false"
+            android:title="@string/hand_wave_gesture_title"
+            android:summary="@string/hand_wave_gesture_summary" />
 
         <SwitchPreference
             android:key="gesture_pocket"

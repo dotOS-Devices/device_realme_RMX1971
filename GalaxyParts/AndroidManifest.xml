@@ -14,17 +14,18 @@
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           android:sharedUserId="android.uid.system"
-          package="org.Galaxy.settings.device"
-          android:versionCode="2"
-          android:versionName="2.0" >
+          package="com.Galaxy.Features"
+          android:versionCode="4"
+          android:versionName="4.0" >
 
     <uses-permission android:name="android.permission.INJECT_EVENTS"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_USERS"/>
 
-    <protected-broadcast android:name="org.Galaxy.settings.device.UPDATE_SETTINGS" />
+    <protected-broadcast android:name="com.Galaxy.Features.UPDATE_SETTINGS" />
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <uses-sdk
@@ -54,26 +55,35 @@
         </activity>
 
         <activity android:name=".GalaxyParts" />
+        <activity android:name=".KeyHandler" />
 
-        <receiver android:name="org.Galaxy.settings.device.Startup" >
+        <receiver android:name="com.Galaxy.Features.Startup" >
             <intent-filter android:priority="100" >
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <activity
-            android:name="org.Galaxy.settings.device.doze.DozeSettingsActivity"
-            android:exported="true"
+            android:name=".Touch.ScreenOffGestureSettings"
+            android:label="@string/screen_off_gestures">
+          <intent-filter>
+                <action android:name="com.android.settings.action.EXTRA_SETTINGS" />
+          </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".doze.DozeSettingsActivity"
+            android:icon="@drawable/ic_eye"
             android:label="@string/ambient_display_title"
-            android:launchMode="singleTask" >
+            android:theme="@style/Theme.Main">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="com.Galaxy.Features.DOZE_SETTINGS" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
         
         <activity
-            android:name="org.Galaxy.settings.device.kcal.DisplayCalibration"
+            android:name="com.Galaxy.Features.kcal.DisplayCalibration"
             android:label="@string/kcal_title">
           <intent-filter>
                 <action android:name="com.android.settings.action.IA_SETTINGS" />
@@ -82,17 +92,7 @@
 
         <!-- Quick Settings Tiles -->
         <service
-            android:name="org.Galaxy.settings.device.doze.DozeTileService"
-            android:icon="@drawable/ic_eye"
-            android:label="@string/ambient_display_gestures_title"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action
-                    android:name="android.service.quicksettings.action.QS_TILE"/>
-            </intent-filter>
-        </service>
-        <service
-            android:name="org.Galaxy.settings.device.GameModeTileService"
+            android:name="com.Galaxy.Features.GameModeTileService"
             android:icon="@drawable/ic_game_tile"
             android:label="@string/tile_game_mode"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
@@ -107,7 +107,7 @@
             android:enabled="true"
             android:stopWithTask="false" />
 
-        <service android:name="org.Galaxy.settings.device.doze.DozeService"
+        <service android:name="com.Galaxy.Features.doze.DozeService"
                  android:permission="RealmeDozeService">
         </service>
         <service
@@ -124,7 +124,7 @@
                     android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
         </service>
-        <service android:name="org.Galaxy.settings.device.SmartChargingService"
+        <service android:name="com.Galaxy.Features.SmartChargingService"
                 android:exported="false">
         </service>
     </application>
