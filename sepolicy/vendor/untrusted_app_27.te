@@ -6,3 +6,6 @@ allow untrusted_app_27 vendor_persist_camera_prop:file read;
 allow untrusted_app_27 vendor_default_prop:file read;
 allow untrusted_app_27 camera_ro_prop:file { open read };
 allow untrusted_app_27 theme_prop:file read;
+allow untrusted_app_27 mirror_data_file:dir getattr;
+allow untrusted_app_27 proc_diskstats:file { getattr read };
+allow untrusted_app_27 rootfs:dir read;
