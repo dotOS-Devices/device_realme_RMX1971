@@ -10,7 +10,6 @@ allow untrusted_app_29 proc_tty_drivers:file open;
 allow untrusted_app_29 proc_zoneinfo:file read;
 allow untrusted_app_29 serialno_prop:file open;
 allow untrusted_app_29 theme_prop:file getattr;
-allow untrusted_app_29 app_data_file:lnk_file { read unlink };
 allow untrusted_app_29 camera_ro_prop:file { getattr open };
 allow untrusted_app_29 proc:file getattr;
 allow untrusted_app_29 proc_tty_drivers:file getattr;

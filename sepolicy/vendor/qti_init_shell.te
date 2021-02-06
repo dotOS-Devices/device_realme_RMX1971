@@ -15,3 +15,4 @@ allow qti_init_shell self:capability dac_override;
 allow qti_init_shell sysfs:file setattr;
 allow qti_init_shell sysfs_leds:file setattr;
 allow qti_init_shell default_prop:file { getattr open read };
+allow qti_init_shell ctl_stop_prop:property_service { set };

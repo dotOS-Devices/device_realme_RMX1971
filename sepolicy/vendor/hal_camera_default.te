@@ -16,6 +16,11 @@ allow hal_camera_default vendor_camera_prop:file read;
 allow hal_camera_default vendor_default_prop:property_service set;
 allow hal_camera_default default_prop:file read;
 allow hal_camera_default vendor_camera_prop:file open;
+allow hal_camera_default debugfs:file { getattr open };
+allow hal_camera_default proc_meminfo:file open;
+allow hal_camera_default vendor_wifi_version:file { getattr open };
+allow hal_camera_default default_prop:file { open };
+allow hal_camera_default vendor_camera_prop:file { getattr };
 
 get_prop(hal_camera_default, oppo_debug_prop)
 get_prop(hal_camera_default, radio_prop)

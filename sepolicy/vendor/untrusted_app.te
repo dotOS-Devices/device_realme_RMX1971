@@ -2,3 +2,4 @@ allow untrusted_app sysfs_kgsl:dir search;
 allow untrusted_app theme_prop:file read;
 allow untrusted_app camera_ro_prop:file read;
 allow untrusted_app vendor_default_prop:file open;
+allow untrusted_app vendor_default_prop:file getattr;

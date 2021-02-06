@@ -1,2 +1,3 @@
 #============= untrusted_app_29 ==============
 allow untrusted_app_29 app_data_file:lnk_file read;
+allow untrusted_app_29 app_data_file:lnk_file { read unlink };
