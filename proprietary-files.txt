@@ -620,6 +620,12 @@ product/etc/CarrierSettings/xfinity_us.pb|cff7ca7f06f9f88a510f92bc71c7126375e1f2
 vendor/lib/libhdr_tm.so|1e8a647523db0a09c9587a77f1f7b132a03c2354
 vendor/lib64/libhdr_tm.so|7ac38563480eab0583cb440e667a44cfa596167a
 
+# Display (Hardware) - from PNX - RKQ1.200906.002
+vendor/lib/libsdmcore.so|e71175a1fb0b170cbcf6ae3b860d1f51def51797
+vendor/lib64/libsdmcore.so|e3fd7f10613346651855c7f4505edfe568037a63
+vendor/lib/hw/hwcomposer.sdm710.so|69f28113ea02625f61d26112f5bfd56ced254f32
+vendor/lib64/hw/hwcomposer.sdm710.so|efdd732b4a847f750815b67bb4d352aa757744e6
+
 # Display (SDM) - from LA.UM.9.8.r1-02700-SDM710.0
 vendor/lib/libdisplayqos.so|7b83c36716bae758c71d34b85401d7d77afa2c23
 vendor/lib/libqseed3.so|97948ad43dd74907b665c43671f5becbaa4d64d2
