@@ -19,7 +19,6 @@ package com.Galaxy.Features;
 
 import android.app.ActivityManager;
 import android.app.Activity;
-import android.app.slice.SliceItem;
 import android.provider.Settings;
 import android.os.SELinux;
 import android.util.Log;
@@ -81,8 +80,6 @@ public class Startup extends BroadcastReceiver {
         if (enabled) {
             context.startService(new Intent(context, FPSInfoService.class));
         }
-        SliceItem intent = null;
-        if (intent.getAction().equals(Intent.ACTION_BOOT_COMPLETED)) {
             enableComponent(context, ScreenOffGesture.class.getName());
             SharedPreferences screenOffGestureSharedPreferences = context.getSharedPreferences(
                     Utils.PREFERENCES, Activity.MODE_PRIVATE);
@@ -92,8 +89,6 @@ public class Startup extends BroadcastReceiver {
             KernelControl.enableDt2w(
                     screenOffGestureSharedPreferences.getBoolean(
                             ScreenOffGesture.PREF_DT2W_ENABLE, true));
-        }
-
     mContext = context;
     ActivityManager activityManager =
             (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
