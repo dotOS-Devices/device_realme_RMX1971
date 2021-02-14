@@ -46,12 +46,6 @@ public final class KernelControl {
             }
     }
 
-    public static void enableDt2w(boolean enable) {
-            if (new File(GESTURE_PATH).exists()) {
-                Utils.writeLine(DT2W_PATH, enable ? "1" : "0");
-            }
-    }
-
     /**
      * Do we have touch control at all?
      */

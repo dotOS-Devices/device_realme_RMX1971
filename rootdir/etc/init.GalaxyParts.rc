@@ -1,12 +1,4 @@
 on boot
-    chown system system /proc/touchpanel/game_switch_enable
-    chown system system /proc/touchpanel/oppo_tp_direction
-    chown system system /proc/touchpanel/oppo_tp_limit_enable
-
-    chmod 0666 /proc/touchpanel/game_switch_enable
-    chmod 0666 /proc/touchpanel/oppo_tp_direction
-    chmod 0666 /proc/touchpanel/oppo_tp_limit_enable
-
 # KCAL permissions
   chown system system /sys/devices/platform/kcal_ctrl.0/kcal
   chown system system /sys/devices/platform/kcal_ctrl.0/kcal_enable

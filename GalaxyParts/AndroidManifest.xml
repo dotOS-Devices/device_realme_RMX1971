@@ -34,7 +34,6 @@
 
     <application
         android:icon="@drawable/ic_galaxyparts"
-        android:label="@string/customize_title"
         android:theme="@style/AppTheme">
 
         <!-- Galaxy Parts -->
@@ -92,17 +91,6 @@
 
         <!-- Quick Settings Tiles -->
         <service
-            android:name="com.Galaxy.Features.GameModeTileService"
-            android:icon="@drawable/ic_game_tile"
-            android:label="@string/tile_game_mode"
-            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
-            <intent-filter>
-                <action
-                    android:name="android.service.quicksettings.action.QS_TILE"/>
-            </intent-filter>
-        </service>
-
-        <service
             android:name=".DiracService"
             android:enabled="true"
             android:stopWithTask="false" />
@@ -123,9 +111,6 @@
                 <action
                     android:name="android.service.quicksettings.action.QS_TILE"/>
             </intent-filter>
-        </service>
-        <service android:name="com.Galaxy.Features.SmartChargingService"
-                android:exported="false">
         </service>
     </application>
 </manifest>

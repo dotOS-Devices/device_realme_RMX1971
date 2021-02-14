@@ -32,7 +32,6 @@ import androidx.preference.PreferenceManager;
 import com.Galaxy.Features.Touch.util.Utils;
 import com.Galaxy.Features.doze.DozeUtils;
 import com.Galaxy.Features.Touch.ScreenOffGesture;
-import com.Galaxy.Features.ModeSwitch.GameModeSwitch;
 import com.Galaxy.Features.kcal.DisplayCalibration;
 import com.Galaxy.Features.DiracUtils;
 import com.Galaxy.Features.R;
@@ -74,21 +73,17 @@ public class Startup extends BroadcastReceiver {
     public void onReceive(final Context context, final Intent bootintent) {
         boolean enabled = false;
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences (context);
-        enabled = sharedPrefs.getBoolean (GalaxyParts.KEY_GAME_SWITCH, false);
-        restore (GameModeSwitch.getFile ( ), enabled);
         enabled = sharedPrefs.getBoolean(GalaxyParts.PREF_KEY_FPS_INFO, false);
         if (enabled) {
             context.startService(new Intent(context, FPSInfoService.class));
-        }
             enableComponent(context, ScreenOffGesture.class.getName());
             SharedPreferences screenOffGestureSharedPreferences = context.getSharedPreferences(
                     Utils.PREFERENCES, Activity.MODE_PRIVATE);
             KernelControl.enableGestures(
                     screenOffGestureSharedPreferences.getBoolean(
                             ScreenOffGesture.PREF_GESTURE_ENABLE, true));
-            KernelControl.enableDt2w(
-                    screenOffGestureSharedPreferences.getBoolean(
-                            ScreenOffGesture.PREF_DT2W_ENABLE, true));
+        }
+
     mContext = context;
     ActivityManager activityManager =
             (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
@@ -156,12 +151,7 @@ public class Startup extends BroadcastReceiver {
         enabled = sharedPrefs.getBoolean (GalaxyParts.PREF_KEY_FPS_INFO, false);
         if (enabled) {
             context.startService (new Intent (context, FPSInfoService.class));
-            enabled = sharedPrefs.getBoolean (GalaxyParts.KEY_CHARGING_SWITCH, false);
-            if (enabled) {
-                context.startService (new Intent (context, SmartChargingService.class));
-            }
         }
-
     }
 
     private void enableComponent(Context context, String name) {
