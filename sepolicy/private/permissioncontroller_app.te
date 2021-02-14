@@ -1,2 +1,3 @@
 #============= permissioncontroller_app ==============
-allow permissioncontroller_app theme_prop:file read;
+allow permissioncontroller_app theme_prop:file { read open };
+allow permissioncontroller_app tethering_service:service_manager find;

@@ -1,26 +1,23 @@
 allow hal_camera_default persist_camera_file:file { read write open setattr};
-allow hal_camera_default persist_camera_file:dir { write search };
+allow hal_camera_default persist_camera_file:dir { write search add_name getattr };
 
 allow hal_camera_default proc:file { read write open getattr };
 allow hal_camera_default proc_oppoversion:dir { search };
 allow hal_camera_default proc_oppoversion:file { read open };
-allow hal_camera_default persist_camera_file:dir { add_name };
 allow hal_camera_default persist_camera_file:file { getattr create };
 allow hal_camera_default default_android_vndservice:service_manager find;
 allow hal_camera_default self:tcp_socket create;
 allow hal_camera_default vendor_file:file execute_no_trans;
 allow hal_camera_default vendor_shell_exec:file execute_no_trans;
 allow hal_camera_default debugfs:file read;
-allow hal_camera_default proc_meminfo:file read;
+allow hal_camera_default proc_meminfo:file { read open getattr };
 allow hal_camera_default vendor_camera_prop:file read;
 allow hal_camera_default vendor_default_prop:property_service set;
-allow hal_camera_default default_prop:file read;
+allow hal_camera_default default_prop:file { read open getattr };
 allow hal_camera_default vendor_camera_prop:file open;
 allow hal_camera_default debugfs:file { getattr open };
-allow hal_camera_default proc_meminfo:file open;
-allow hal_camera_default vendor_wifi_version:file { getattr open };
-allow hal_camera_default default_prop:file { open };
-allow hal_camera_default vendor_camera_prop:file { getattr };
+allow hal_camera_default vendor_camera_prop:file { getattr open };
+allow hal_camera_default camera_data_file:dir search;
 
 get_prop(hal_camera_default, oppo_debug_prop)
 get_prop(hal_camera_default, radio_prop)

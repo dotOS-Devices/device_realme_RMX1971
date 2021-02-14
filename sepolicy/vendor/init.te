@@ -24,6 +24,7 @@ allow init self:rawip_socket { create getopt setopt };
 allow init vendor_file:file execute;
 allow init vendor_file:file execute_no_trans;
 allow init su:process { noatsecure  rlimitinh  siginh  transition };
+allow init debugfs:dir { mounton };
 
 # Allow init to write to sysfs_battery_supply
 allow init sysfs_battery_supply:file { setattr };
