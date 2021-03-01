@@ -436,9 +436,5 @@ PRODUCT_PACKAGES += \
 PRODUCT_BOOT_JARS += \
     WfdCommon
 
-# loggy
-PRODUCT_PACKAGES += \
-    loggy.sh
-
 # Inherit vendor
 $(call inherit-product-if-exists, vendor/realme/RMX1971/RMX1971-vendor.mk)
