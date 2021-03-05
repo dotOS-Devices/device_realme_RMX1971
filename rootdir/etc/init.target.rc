@@ -441,6 +441,17 @@ on property:init.svc.vendor.hwcomposer-2-3=running
 on property:init.svc.vendor.hwcomposer-2-3=restarting
     stop ppd
 
+on boot
+# Enable oppo touchpanel direction
+    chown system system /proc/touchpanel/oppo_tp_direction
+    chown 0660 /proc/touchpanel/oppo_tp_direction
+    write /proc/touchpanel/oppo_tp_direction 1
+
+# Update touchscreen firmware
+    chown system system /proc/touchpanel/tp_fw_update
+    chown 0660 /proc/touchpanel/tp_fw_update
+    write /proc/touchpanel/tp_fw_update 1
+
 #service nqs /system/bin/nqs
 #    class late_start
 #    socket nqs_qsb_comm stream 660 system system
