@@ -34,7 +34,6 @@ import /vendor/etc/init/hw/init.qcom.test.rc
 import /vendor/etc/init/hw/init.target.rc
 import /vendor/etc/init/hw/init.qcom.factory.rc
 import /vendor/etc/init/hw/init.GalaxyParts.rc
-import /vendor/etc/init/hw/logcat.rc
 import /etc/init.spectrum.rc
 
 #ifdef VENDOR_EDIT
@@ -49,7 +48,6 @@ import /vendor/etc/init/hw/init.oppo.reserve.rc
 #Junhao.Liang@PSW.AD.OppoDebug.LogKit.1080426, 2018/12/04, Add for import init.oppo.debug.diag.rc
 import /vendor/etc/init/hw/init.oppo.debug.diag.rc
 #endif /*VENDOR_EDIT*/
-
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
