@@ -61,3 +61,8 @@
 /sys/class/power_supply/battery/temp           u:object_r:sysfs_device_info:s0
 /sys/kernel/gpu/gpu_clock                      u:object_r:sysfs_device_info:s0
 /sys/kernel/gpu/gpu_busy                       u:object_r:sysfs_device_info:s0
+
+# UFS Devices
+/dev/block/platform/soc/1d84000\.ufshc/by-name/vendor                u:object_r:system_block_device:s0
+/dev/block/platform/soc/1d84000\.ufshc/by-name/odm                   u:object_r:system_block_device:s0
+/dev/block/platform/soc/1d84000\.ufshc/by-name/metadata              u:object_r:metadata_block_device:s0
