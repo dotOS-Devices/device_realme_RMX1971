@@ -2,23 +2,23 @@
   {
     "repository": "device_realme_sdm710-common",
     "target_path": "device/realme/sdm710-common",
-    "branch": "dot11"
+    "branch": "dot12"
   },
   {
     "repository": "kernel_realme_RMX1971",
-    "target_path": "kernel/realme/RMX1971",
+    "target_path": "kernel/realme/sdm710",
     "branch": "dot11"
   },
   {
     "repository": "vendor_realme_rmx1971",
     "target_path": "vendor/realme/RMX1971",
-    "branch": "dot11",
+    "branch": "dot12",
     "remote": "dotos-devices-gitlab"
   },
   {
     "repository": "vendor_realme_sdm710-common",
     "target_path": "vendor/realme/sdm710-common",
-    "branch": "dot11",
+    "branch": "dot12",
     "remote": "dotos-devices-gitlab"
   }
 ]
