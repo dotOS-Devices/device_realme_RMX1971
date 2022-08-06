@@ -7,7 +7,7 @@
   {
     "repository": "kernel_realme_RMX1971",
     "target_path": "kernel/realme/sdm710",
-    "branch": "dot11"
+    "branch": "dot12"
   },
   {
     "repository": "vendor_realme_rmx1971",
